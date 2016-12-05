@@ -17,9 +17,9 @@ class ErrorCorrection:
     def str_to_bin(self, chars):
         """Transforming characters into binary code."""
         assert not len(chars) * 8 % self.bits
-        c = "0"
-        c += '0'.join(format(ord(x), 'b') for x in chars)  #TODO make work for  lines with spaces
-
+        #c = "0"
+        #c += '0'.join(format(ord(x), 'b') for x in chars)  #TODO make work for  lines with spaces
+        c = ''.join([bin(ord(k))[2:].zfill(8) for k in chars])
         return c
 
 
