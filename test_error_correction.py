@@ -60,6 +60,15 @@ class TestErrorCorrection(unittest.TestCase):
         self.assertRaises(TypeError, lambda: ErrorCorrection(12.0))
         self.assertRaises(TypeError, lambda: ErrorCorrection(numpy.matrix('1 0;0 1')))
         self.assertRaises(TypeError, lambda: ErrorCorrection([1,2,3]))
-
+    def test_matrix_to_bit_str(self):
+        test_matrix = np.matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0], [1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1], [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1], [1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1]])
+        test_matrix_2 = np.matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], [1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1], [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0], [1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1]])
+        expected = "01110100011001010111001101110100011010010110111001100111"
+        expected_2 = "011101000110010101110011011101000110100101101110011001110010000001100011011011110110010001100101"
+        C = ErrorCorrection("data")
+        result = C.matrix_to_bit_str(test_matrix)
+        result2 = C.matrix_to_bit_str(test_matrix_2)
+        self.assertTrue(result, expected)
+        self.assertTrue(result2, expected_2)
 if __name__ == '__main__':
     unittest.main()
