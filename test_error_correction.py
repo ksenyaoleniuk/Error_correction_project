@@ -37,6 +37,12 @@ class TestErrorCorrection(unittest.TestCase):
         result2 = C.bit_str_to_matrix(test_str_2)
         self.assertTrue(result.tolist(), expected)
         self.assertTrue(result2.tolist(), expected_2)
+        
+    def test_check_input_data(self):
+        self.assertRaises(TypeError, lambda: ErrorCorrection(12))
+        self.assertRaises(TypeError, lambda: ErrorCorrection(12.0))
+        self.assertRaises(TypeError, lambda: ErrorCorrection(numpy.matrix('1 0;0 1')))
+        self.assertRaises(TypeError, lambda: ErrorCorrection([1,2,3]))
 
 if __name__ == '__main__':
     unittest.main()
