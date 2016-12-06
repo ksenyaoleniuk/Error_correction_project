@@ -47,6 +47,14 @@ class TestErrorCorrection(unittest.TestCase):
         result = C.encode_hamming(test_matrix)
         self.assertTrue(result.tolist(), expected)
         
+    def test_correct_errors(self):
+        f = ErrorCorrection("data")
+        matr = f.bit_str_to_matrix("010010000110010101101111")
+        enc_m = f.encode_hamming(matr)
+        ans = f.correct_errors(enc_m)
+        expected = np.matrix([[1, 1, 1, 0, 1, 1], [0, 1, 1, 1, 1, 1], [0, 1, 0, 0, 0, 1], [1 ,0, 0 ,0,0,1], [1, 0, 1, 1, 1,1], [0, 0, 1, 0, 1, 1], [0, 0, 0, 1, 0, 1]])
+        self.assertTrue(ans.tolist(), expected)
+        
     def test_check_input_data(self):
         self.assertRaises(TypeError, lambda: ErrorCorrection(12))
         self.assertRaises(TypeError, lambda: ErrorCorrection(12.0))
