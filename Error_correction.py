@@ -46,7 +46,8 @@ class ErrorCorrection:
 
     def matrix_to_bit_str(self, matrix):
         """Transform binary matrix into binary seq"""
-        return ''.join([''.join(nibble) for nibble in matrix])
+        return ''.join([''.join([str(nibble[0,i]) for i in range(nibble.shape[1])])for nibble in matrix.T])
+
 
 
     def encode_hamming(self, matrix):
@@ -80,3 +81,5 @@ class ErrorCorrection:
 
 
 
+err = ErrorCorrection("dxcfg")
+print(err.matrix_to_bit_str(np.matrix([[1,3,],[6,7]])))
