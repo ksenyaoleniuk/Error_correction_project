@@ -1,1 +1,28 @@
-
+                                                        Error Correction
+                                                         Hamming(7, 4)
+                                                         
+         Hamming code is a forward error correction (FEC) scheme which can be used to detect and correct bit errors. The error correction bits are known as Hamming bits and the number that need to be added to a data symbol is determined by the expression:
+                                                          2^n >= (m+n+1) 
+                         where m is number of bits in the data symbol and n is number of Hamming bits.
+                                      
+         Hamming(7, 4) code is a linear error-correcting code that encodes four bits of data into seven bits by adding three parity bits.  
+        Hamming codes can be computed in linear algebra terms through matrices because Hamming codes are linear codes. For the purposes of Hamming codes, two Hamming matrices can be defined: the code generator matrix G and the parity-check matrix H:
+        
+                        G = [[1,1,0,1], [1,0,1,1], [1,0,0,0], [0,1,1,1], [0,1,0,0], [0,0,1,0], [0,0,0,1]]
+                        H = [[1,0,1,0,1,0,1], [0,1,1,0,0,1,1], [0,0,0,1,1,1,1]]
+        
+        The Hamming code adds three additional check bits to every four data bits of the message. Hamming's (7,4) algorithm can correct any single-bit error, or detect all single-bit and two-bit errors.
+        As mentioned above, rows 1, 2, and 4 of G should look familiar as they map the data bits to their parity bits:
+                                p1 covers d1, d2, d4
+                                        p2 covers d1, d3, d4
+                                                p3 covers d2, d3, d4
+                                                
+         If no error occurs during transmission, then the received codeword y is identical to the transmitted codeword x:   y = x.
+         We can multipliy H and y to obtain the syndrome vector z, which indicates whether an error has occurred, and if so, for which codeword bit.
+         Let's suppose that a single bit error has occurred. We can write y = x + e, where e signifies a vector with a single bit error in the  i-th place.
+          We multiply this vector by H : Hy = Hx + He, where the product of H and x is zero, because x doesn't have an error, so
+                                                                Hx + He = He
+          The product of H with the  i-th standard basis vector picks out that column of H, we know the error occurs in the place where this column of H occurs. Thus, an error has been detected in i-th bit, and can be corrected, just flip or negate its value.
+          Once the received vector has been determined to be error-free or corrected if an error occurred, then the received data needs to be decoded back into the original four bits.
+        Assume the matrix R = [[0,0,1,0,0,0,0], [0,0,0,0,1,0,0], [0,0,0,0,0,1,0], [0,0,0,0,0,0,1]], the received value is equal to Rc, 
+where c is corrected vector.
