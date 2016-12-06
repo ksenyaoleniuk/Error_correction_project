@@ -38,6 +38,15 @@ class TestErrorCorrection(unittest.TestCase):
         self.assertTrue(result.tolist(), expected)
         self.assertTrue(result2.tolist(), expected_2)
         
+    def test_encode_hamming(self):
+        test_matrix = np.matrix([[1,1,1,0,0,1,0], [1,0,0,1,1,0,0], [0,1,1,0,0,1,0], [0,1,1,1,0,0,1]])
+        expected = np.matrix([[2, 2, 2, 2, 1, 1, 1], [1, 3, 3, 1, 0, 2, 1], [1, 1, 1, 0, 0,1, 0], [1, 2, 2, 2, 1, 1, 1],
+                              [1, 0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1, 0], [0,1, 1, 1, 0, 0, 1]]) % 2
+        # GENERATOR_M = np.matrix([[1,1,0,1], [1,0,1,1], [1,0,0,0], [0,1,1,1], [0,1,0,0], [0,0,1,0], [0,0,0,1]])
+        C = ErrorCorrection("data")
+        result = C.encode_hamming(test_matrix)
+        self.assertTrue(result.tolist(), expected)
+        
     def test_check_input_data(self):
         self.assertRaises(TypeError, lambda: ErrorCorrection(12))
         self.assertRaises(TypeError, lambda: ErrorCorrection(12.0))
