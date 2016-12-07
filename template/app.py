@@ -1,0 +1,24 @@
+from flask import Flask, render_template, request
+import random
+from Error_correction import ErrorCorrection
+
+app = Flask(__name__)
+
+#deleted to_string()
+
+@app.route('/', methods=["GET", "POST"])
+def get_index():
+    try:
+        if request.method == "POST":
+            message = request.form['input']
+            print(message)
+            correction = ErrorCorrection(message)
+            return render_template('error_correction.html', message=message, #solution=to_string(new_matrix.solve_equation(b)))
+        else:
+            return render_template('error_correction.html')
+    except:
+        return render_template('error_correction.html', error_message="This data type is incorrect.")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

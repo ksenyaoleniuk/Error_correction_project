@@ -1,12 +1,10 @@
 import numpy as np
 
 
-
 class ErrorCorrection:
     GENERATOR_M = np.matrix([[1,1,0,1], [1,0,1,1], [1,0,0,0], [0,1,1,1], [0,1,0,0], [0,0,1,0], [0,0,0,1]])
     PARITY_CHECK_M = np.matrix([[1,0,1,0,1,0,1], [0,1,1,0,0,1,1], [0,0,0,1,1,1,1]])
     R_M  = np.matrix([[0,0,1,0,0,0,0], [0,0,0,0,1,0,0], [0,0,0,0,0,1,0], [0,0,0,0,0,0,1]])
-
 
     def __init__(self, string):
         self.string = string
@@ -18,11 +16,9 @@ class ErrorCorrection:
         """Transforming characters into binary code."""
         assert not len(chars) * 8 % self.bits
         #c = "0"
-        #c += '0'.join(format(ord(x), 'b') for x in chars)  
+        #c += '0'.join(format(ord(x), 'b') for x in chars)
         c = ''.join([bin(ord(k))[2:].zfill(8) for k in chars])
         return c
-
-
 
     def bits_to_str(self, bit_str):
         """Transform binary seq into string"""

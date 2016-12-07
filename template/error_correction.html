@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='shortcuticon.jpg') }}">
+
+    <title>Error Correction Project</title>
+     <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+             tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+         });
+    </script>
+    <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+<body style="background-color: rgba(215, 252, 204, 0.32);">
+
+<div id="container"> <!-- everything on the screen -->
+    <h1 style="color: white; background-color: #017c57; border-radius: 10px; text-align: center;"> Decoding is beautiful </h1>
+    <div id="for_form" style="border-radius: 10px; padding-top:10%; background-color: rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
+        <div id="for_input" style="width: 40%;background-color: #6fdb99; border-radius: 10px; margin-left: 5%">
+    <form id='input' method="post" action="/" style="border-radius: 10px;"  >
+            <div style="margin-left: 5%;">
+            <label for='input'> <h2>Type your string in here:</h2> <p><i>(Please use letters)</i></p> </label> <br/>
+                <textarea name="input" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;"></textarea>
+            </div>
+            <br> <!--this tag is moving to thee next line-->
+
+           <!--deleted vB everything-->
+        <div id="for_button" style="margin-left: 5%; margin-bottom: 5%;"> <!-- need this div just to change the margin of the button-->
+         <input type="submit" value="Let's check!">
+        </div>
+
+    </form>
+
+<!--for_matrix = for_input-->
+
+
+        </div>
+    </div>
+    <div id="for_solution" style="wigth:100px; height:100px;  background-color: rgba(215, 252, 204, 0.32);">
+        <p style="font-size: 100%">Resulting code</p>
+         <p style="font-size:100%; "> {{solution}} </p>
+
+         <p style="font: courier;"> {{message}}</p>
+    </div>
+
+
+
+</div>
+</body>
+
+</html>
