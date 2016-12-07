@@ -13,7 +13,7 @@ def get_index():
             message = request.form['input']
             print(message)
             correction = ErrorCorrection(message)
-            return render_template('error_correction.html', message=message, #solution=to_string(new_matrix.solve_equation(b)))
+            return render_template('error_correction.html', message=message, solution=correction.correct_errors(message))
         else:
             return render_template('error_correction.html')
     except:
