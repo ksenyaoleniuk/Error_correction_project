@@ -70,5 +70,15 @@ class TestErrorCorrection(unittest.TestCase):
         result2 = C.matrix_to_bit_str(test_matrix_2)
         self.assertTrue(result, expected)
         self.assertTrue(result2, expected_2)
+        
+    def test_decode(self):
+        test_str = "test"
+        C = ErrorCorrection("smth")
+        a = C.str_to_bin(test_str)
+        b = C.bit_str_to_matrix(a)
+        c = C.encode_hamming(b)
+        result = C.decode(c)
+        expected = [[0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 0, 1, 1], [1, 0, 1, 0, 1, 1, 1, 0], [1, 0, 0, 1, 1, 1, 1, 0]]
+        self.assertTrue(result.tolist(),expected )
 if __name__ == '__main__':
     unittest.main()
