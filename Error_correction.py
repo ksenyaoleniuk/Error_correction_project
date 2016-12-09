@@ -30,12 +30,12 @@ class ErrorCorrection:
         """Correct errors in the columns of matrix(max 1 error for 1 column)"""
         for i in range(matrix.shape[1]):
             error_syndrome = ErrorCorrection.PARITY_CHECK_M.dot(matrix[:, i]) % 2
-            print(error_syndrome)
-            num_col_err = int(''.join([str(error_syndrome[i, 0]) for i in range(3)]), 2)
-
+            print("error synd:" + str(error_syndrome))
+            num_col_err = ''.join([str(error_syndrome[i, 0]) for i in range(2, -1, -1)])
+            num_col_err = int(num_col_err, 2)
             if num_col_err:
-                print(num_col_err - 1)
-                matrix[num_col_err - 1, i] = int( not matrix[num_col_err - 1, i])
+
+                matrix[num_col_err - 1, i] = int(not matrix[num_col_err - 1, i])
         return matrix
 
     def simulate_noisy_channel(self, matrix):
@@ -45,7 +45,7 @@ class ErrorCorrection:
             err = random.choice([0,1])
             if err:
                 bit = random.randint(0, 6)
-                print(bit)
+
                 matrix[bit, i] = int(not matrix[bit, i])
         return matrix
 
@@ -96,8 +96,6 @@ class DataConversion:
             raise TypeError("This data type is incorrect.")
 
 
-
-
 def main(str):
     dc = DataConversion(str)
 
@@ -117,17 +115,3 @@ def main(str):
     right_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(right_matrix)))
 
     return wrong_str, right_str
-
-
-print(main("bty"))
-
-
-
-
-
-
-
-
-
-
-
