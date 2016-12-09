@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class ErrorCorrection:
@@ -6,11 +7,56 @@ class ErrorCorrection:
     PARITY_CHECK_M = np.matrix([[1,0,1,0,1,0,1], [0,1,1,0,0,1,1], [0,0,0,1,1,1,1]])
     R_M  = np.matrix([[0,0,1,0,0,0,0], [0,0,0,0,1,0,0], [0,0,0,0,0,1,0], [0,0,0,0,0,0,1]])
 
-    def __init__(self, string):
-        self.string = string
-        self.check_input_data(self.string)
-        self.bits = 8
+    def __init__(self, matrix):
+        """matrix 4xn"""
+        if matrix.shape[0] != 4:
+            raise TypeError("Wrong size of a matrix")
+        #if type(matrix) != "numpy.matrixlib.defmatrix.matrix":
+         #   raise TypeError
+        self.matrix = matrix
         self.check_bits = [1, 2, 4, 8]
+
+
+    def encode_hamming(self, matrix):
+        """Generate a matrix of Hamming's codewords from matrix of binary words to encode"""
+        return ErrorCorrection.GENERATOR_M.dot(matrix) % 2
+
+    def decode(self, matrix):
+        """Return a matrix of decoded words"""
+        return ErrorCorrection.R_M.dot(matrix)
+
+
+    def correct_errors(self, matrix):
+        """Correct errors in the columns of matrix(max 1 error for 1 column)"""
+        for i in range(matrix.shape[1]):
+            error_syndrome = ErrorCorrection.PARITY_CHECK_M.dot(matrix[:, i]) % 2
+            print(error_syndrome)
+            num_col_err = int(''.join([str(error_syndrome[i, 0]) for i in range(3)]), 2)
+
+            if num_col_err:
+                print(num_col_err - 1)
+                matrix[num_col_err - 1, i] = int( not matrix[num_col_err - 1, i])
+        return matrix
+
+    def simulate_noisy_channel(self, matrix):
+        """Randomly chooses a bit to invert(or not ) in each column of a 7xn matrix,
+         this way simulating conditions, where Hamming's code(7, 3) is useful"""
+        for i in range(matrix.shape[1]):
+            err = random.choice([0,1])
+            if err:
+                bit = random.randint(0, 6)
+                print(bit)
+                matrix[bit, i] = int(not matrix[bit, i])
+        return matrix
+
+
+
+
+class DataConversion:
+    def __init__(self, data):
+        DataConversion.check_input_data(data)
+        self.bits = 8
+        self.data = data
 
     def str_to_bin(self, chars):
         """Transforming characters into binary code."""
@@ -44,30 +90,6 @@ class ErrorCorrection:
         """Transform binary matrix into binary seq"""
         return ''.join([''.join([str(nibble[0,i]) for i in range(nibble.shape[1])])for nibble in matrix.T])
 
-
-
-    def encode_hamming(self, matrix):
-        """Generate a matrix of Hamming's codewords from matrix of binary words to encode"""
-        return ErrorCorrection.GENERATOR_M.dot(matrix) % 2
-
-    def decode(self, matrix):
-        """Return a matrix of decoded words"""
-        return ErrorCorrection.R_M.dot(matrix)
-
-
-    def correct_errors(self, matrix):
-        """Correct errors in the columns of matrix(max 1 error for 1 column)"""
-        for i in range(matrix.shape[1]):
-            error_syndrome = ErrorCorrection.PARITY_CHECK_M.dot(matrix[:, i]) % 2
-            num_col_err = int(''.join([str(error_syndrome[i, 0]) for i in range(3)]), 2)
-
-            if num_col_err:
-                matrix[num_col_err - 1, i] = int( not matrix[num_col_err - 1, i])
-        return matrix
-
-
-
-
     @staticmethod
     def check_input_data(data):
         if type(data) != str:
@@ -76,6 +98,36 @@ class ErrorCorrection:
 
 
 
+def main(str):
+    dc = DataConversion(str)
 
-err = ErrorCorrection("dxcfg")
-print(err.matrix_to_bit_str(np.matrix([[1,3,],[6,7]])))
+    dc.data = dc.str_to_bin(dc.data)
+    matrix = dc.bit_str_to_matrix(dc.data)
+    print(matrix)
+    err = ErrorCorrection(matrix)
+
+    err.matrix = err.encode_hamming(err.matrix)
+
+    wrong_matrix = err.simulate_noisy_channel(err.matrix)
+    #wrong_matrix = err.matrix
+    wrong_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(wrong_matrix)))
+
+    right_matrix = err.correct_errors(wrong_matrix)
+
+    right_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(right_matrix)))
+
+    return wrong_str, right_str
+
+
+print(main("bty"))
+
+
+
+
+
+
+
+
+
+
+
