@@ -110,4 +110,3 @@ def main(strr):
 
     return wrong_str, right_str
 
-err= ErrorCorrection([[12],[45]])
