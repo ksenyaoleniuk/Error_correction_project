@@ -8,11 +8,12 @@ class ErrorCorrection:
     R_M  = np.matrix([[0,0,1,0,0,0,0], [0,0,0,0,1,0,0], [0,0,0,0,0,1,0], [0,0,0,0,0,0,1]])
 
     def __init__(self, matrix):
-        """matrix 4xn"""
-        if matrix.shape[0] != 4:
-            raise TypeError("Wrong size of a matrix")
-        #if type(matrix) != "numpy.matrixlib.defmatrix.matrix":
-         #   raise TypeError
+        """numpy matrix 4xn"""
+        try:
+            if matrix.shape[0] != 4:
+                raise TypeError("Wrong size of a matrix")
+        except AttributeError:
+            raise TypeError("Wrong type of a matrix")
         self.matrix = matrix
         self.check_bits = [1, 2, 4, 8]
 
@@ -30,11 +31,9 @@ class ErrorCorrection:
         """Correct errors in the columns of matrix(max 1 error for 1 column)"""
         for i in range(matrix.shape[1]):
             error_syndrome = ErrorCorrection.PARITY_CHECK_M.dot(matrix[:, i]) % 2
-            print("error synd:" + str(error_syndrome))
             num_col_err = ''.join([str(error_syndrome[i, 0]) for i in range(2, -1, -1)])
             num_col_err = int(num_col_err, 2)
             if num_col_err:
-
                 matrix[num_col_err - 1, i] = int(not matrix[num_col_err - 1, i])
         return matrix
 
@@ -42,14 +41,11 @@ class ErrorCorrection:
         """Randomly chooses a bit to invert(or not ) in each column of a 7xn matrix,
          this way simulating conditions, where Hamming's code(7, 3) is useful"""
         for i in range(matrix.shape[1]):
-            err = random.choice([0,1])
+            err = random.choice([0, 1])
             if err:
                 bit = random.randint(0, 6)
-
                 matrix[bit, i] = int(not matrix[bit, i])
         return matrix
-
-
 
 
 class DataConversion:
@@ -61,8 +57,6 @@ class DataConversion:
     def str_to_bin(self, chars):
         """Transforming characters into binary code."""
         assert not len(chars) * 8 % self.bits
-        #c = "0"
-        #c += '0'.join(format(ord(x), 'b') for x in chars)
         c = ''.join([bin(ord(k))[2:].zfill(8) for k in chars])
         return c
 
@@ -88,7 +82,7 @@ class DataConversion:
 
     def matrix_to_bit_str(self, matrix):
         """Transform binary matrix into binary seq"""
-        return ''.join([''.join([str(nibble[0,i]) for i in range(nibble.shape[1])])for nibble in matrix.T])
+        return ''.join([''.join([str(nibble[0, i]) for i in range(nibble.shape[1])])for nibble in matrix.T])
 
     @staticmethod
     def check_input_data(data):
@@ -96,18 +90,18 @@ class DataConversion:
             raise TypeError("This data type is incorrect.")
 
 
-def main(str):
-    dc = DataConversion(str)
+def main(strr):
+    dc = DataConversion(strr)
 
     dc.data = dc.str_to_bin(dc.data)
     matrix = dc.bit_str_to_matrix(dc.data)
-    print(matrix)
+
     err = ErrorCorrection(matrix)
 
     err.matrix = err.encode_hamming(err.matrix)
 
     wrong_matrix = err.simulate_noisy_channel(err.matrix)
-    #wrong_matrix = err.matrix
+
     wrong_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(wrong_matrix)))
 
     right_matrix = err.correct_errors(wrong_matrix)
@@ -115,3 +109,5 @@ def main(str):
     right_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(right_matrix)))
 
     return wrong_str, right_str
+
+err= ErrorCorrection([[12],[45]])
