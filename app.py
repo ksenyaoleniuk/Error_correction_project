@@ -13,12 +13,12 @@ def get_index():
          if request.method == "POST":
              message = request.form['input']
              print(message)
-             wrong, right = main(message)
+             wrong, right, error_bits = main(message)
              return render_template('error.html', message=message, wr_solution=wrong, r_solution=right)
          else:
              return render_template('error.html')
      except:
-         return render_template('error.html', error_message="This data type is incorrect.")
+         return render_template('error.html', error_message="This data type is incorrect.", message=message)
 
 
 if __name__ == "__main__":

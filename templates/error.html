@@ -21,10 +21,10 @@
         <div id="for_input" style="width: 40%;background-color: #6fdb99; border-radius: 10px; margin-left: 5%">
     <form id='input' method="post" action="/" style="border-radius: 10px;"  >
             <div style="margin-left: 5%;">
-            <label for='input'> <h2>Type your string in here:</h2> <p><i>(Please use letters)</i></p> </label> <br/>
-                <textarea name="input" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;"></textarea>
+            <label for='input'> <h2>Type your string in here:</h2> <p></p> </label> <br/>
+                <textarea name="input" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;">{{message}}</textarea>
             </div>
-            <br> <!--this tag is moving to thee next line-->
+            <br> <!--this tag is moving to the next line-->
 
            <!--deleted vB everything-->
         <div id="for_button" style="margin-left: 5%; margin-bottom: 5%;"> <!-- need this div just to change the margin of the button-->
@@ -42,8 +42,8 @@
         <p style="font-size: 100%">Resulting code</p>
          <p style="font-size:100%; "> {{wr_solution}} </p>
 
-        <p style="font-size:100%; "> {{r_solution}} </p>
-
+        <!--<p style="font-size:100%; "> {{r_solution}} </p>-->
+ 
 
          <p style="font: courier;"> {{message}}</p>
     </div>

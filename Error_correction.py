@@ -29,17 +29,20 @@ class ErrorCorrection:
 
     def correct_errors(self, matrix):
         """Correct errors in the columns of matrix(max 1 error for 1 column)"""
+        error_bits = []
         for i in range(matrix.shape[1]):
             error_syndrome = ErrorCorrection.PARITY_CHECK_M.dot(matrix[:, i]) % 2
             num_col_err = ''.join([str(error_syndrome[i, 0]) for i in range(2, -1, -1)])
             num_col_err = int(num_col_err, 2)
             if num_col_err:
+                error_bits.append(num_col_err - 1 + i * 7)  # number( номер) of bits corrected, calculating from 0 if we transform 7xn matrix into string of bits
                 matrix[num_col_err - 1, i] = int(not matrix[num_col_err - 1, i])
-        return matrix
+        return matrix, error_bits
 
     def simulate_noisy_channel(self, matrix):
         """Randomly chooses a bit to invert(or not ) in each column of a 7xn matrix,
          this way simulating conditions, where Hamming's code(7, 3) is useful"""
+
         for i in range(matrix.shape[1]):
             err = random.choice([0, 1])
             if err:
@@ -104,9 +107,11 @@ def main(strr):
 
     wrong_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(wrong_matrix)))
 
-    right_matrix = err.correct_errors(wrong_matrix)
+    right_matrix, error_bits = err.correct_errors(wrong_matrix)
 
     right_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(right_matrix)))
 
-    return wrong_str, right_str
+    return wrong_str, right_str, error_bits
+
+print(main("apple"))
 
