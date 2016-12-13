@@ -105,13 +105,15 @@ def main(strr):
 
     wrong_matrix = err.simulate_noisy_channel(err.matrix)
 
+    bin_str = dc.matrix_to_bit_str(wrong_matrix)
+
     wrong_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(wrong_matrix)))
 
     right_matrix, error_bits = err.correct_errors(wrong_matrix)
 
     right_str = dc.bits_to_str(dc.matrix_to_bit_str(err.decode(right_matrix)))
 
-    return wrong_str, right_str, error_bits
+    return wrong_str, right_str, error_bits, bin_str
 
 print(main("apple"))
 

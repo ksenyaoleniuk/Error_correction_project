@@ -58,7 +58,7 @@ class TestErrorCorrection(unittest.TestCase):
 
     # -----------------------------------------------------------------------------------
 
-        def test_encode_hamming(self):
+    def test_encode_hamming(self):
         test_str = "apple"
         test = DataConversion(test_str)
         test.data = test.str_to_bin(test.data)
