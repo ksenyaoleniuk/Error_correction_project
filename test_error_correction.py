@@ -58,33 +58,51 @@ class TestErrorCorrection(unittest.TestCase):
 
     # -----------------------------------------------------------------------------------
 
-    def test_encode_hamming(self):
-        test_matrix = np.matrix([[1,1,1,0,0,1,0], [1,0,0,1,1,0,0], [0,1,1,0,0,1,0], [0,1,1,1,0,0,1]])
-        expected = np.matrix([[2, 2, 2, 2, 1, 1, 1], [1, 3, 3, 1, 0, 2, 1], [1, 1, 1, 0, 0,1, 0], [1, 2, 2, 2, 1, 1, 1],
-                              [1, 0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1, 0], [0,1, 1, 1, 0, 0, 1]]) % 2
-        # GENERATOR_M = np.matrix([[1,1,0,1], [1,0,1,1], [1,0,0,0], [0,1,1,1], [0,1,0,0], [0,0,1,0], [0,0,0,1]])
-        C = ErrorCorrection("data")
-        result = C.encode_hamming(test_matrix)
-        self.assertTrue(result.tolist(), expected)
+        def test_encode_hamming(self):
+        test_str = "apple"
+        test = DataConversion(test_str)
+        test.data = test.str_to_bin(test.data)
+        matrix = test.bit_str_to_matrix(test.data)
+        test_err = ErrorCorrection(matrix)
+        n = test_err.matrix = test_err.encode_hamming(test_err.matrix)
+        expected = [[1, 1, 0, 0, 0, 0, 1, 0, 1, 0], [1, 1, 0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 1, 1, 0, 1, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 1, 1, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 1, 0, 0, 0, 0, 1]]
+        self.assertTrue(n.tolist(), expected)
+
 
     def test_correct_errors(self):
-        f1 = DataConversion("data")
-        f = ErrorCorrection("")
-        matr = f1.bit_str_to_matrix("010010000110010101101111")
-        enc_m = f.encode_hamming(matr)
-        ans = f.correct_errors(enc_m)
-        expected = np.matrix([[1, 1, 1, 0, 1, 1], [0, 1, 1, 1, 1, 1], [0, 1, 0, 0, 0, 1], [1 ,0, 0 ,0,0,1], [1, 0, 1, 1, 1,1], [0, 0, 1, 0, 1, 1], [0, 0, 0, 1, 0, 1]])
-        self.assertTrue(ans.tolist(), expected)
+        test_str = "apple"
+        test = DataConversion(test_str)
+        test.data = test.str_to_bin(test.data)
+        matrix = test.bit_str_to_matrix(test.data)
+        test_err = ErrorCorrection(matrix)
+        test_err.matrix = test_err.encode_hamming(test_err.matrix)
+        wrong_matrix = np.matrix([[1, 1, 0, 0, 0, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 1, 1, 0, 1, 0, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 1, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 1, 1, 0, 0, 0, 1]])
+        right_matrix, error_bits = test_err.correct_errors(wrong_matrix)
+        expected_right_matrix = [[1, 1, 0, 0, 0, 0, 1, 0, 1, 0], [1, 1, 0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 1, 1, 0, 1, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 1, 1, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 1, 0, 0, 0, 0, 1]]
+        expected_error_bits = [2, 11, 18, 41, 42]
+        self.assertEqual(right_matrix.tolist(), expected_right_matrix)
+        self.assertEqual(error_bits, expected_error_bits)
 
     def test_decode(self):
-        test_str = "test"
-        C = DataConversion("data")
-        E = ErrorCorrection("")
-        a = C.str_to_bin(test_str)
-        b = C.bit_str_to_matrix(a)
-        c = E.encode_hamming(b)
-        result = E.decode(c)
-        expected = [[0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 0, 1, 1], [1, 0, 1, 0, 1, 1, 1, 0], [1, 0, 0, 1, 1, 1, 1, 0]]
-        self.assertTrue(result.tolist(),expected )
+        test_str = "apple"
+        test = DataConversion(test_str)
+        test.data = test.str_to_bin(test.data)
+        matrix = test.bit_str_to_matrix(test.data)
+        test_err = ErrorCorrection(matrix)
+        test_err.matrix = test_err.encode_hamming(test_err.matrix)
+        wrong_matrix = test_err.simulate_noisy_channel(test_err.matrix)
+        right_matrix, error_bits = test_err.correct_errors(wrong_matrix)
+        right_str = test.bits_to_str(test.matrix_to_bit_str(test_err.decode(right_matrix)))
+        test_str_2 = "banana"
+        test = DataConversion(test_str_2)
+        test.data = test.str_to_bin(test.data)
+        matrix = test.bit_str_to_matrix(test.data)
+        test_err = ErrorCorrection(matrix)
+        test_err.matrix = test_err.encode_hamming(test_err.matrix)
+        wrong_matrix = test_err.simulate_noisy_channel(test_err.matrix)
+        right_matrix, error_bits = test_err.correct_errors(wrong_matrix)
+        right_str_2 = test.bits_to_str(test.matrix_to_bit_str(test_err.decode(right_matrix)))
+        self.assertEqual(test_str, right_str)
+        self.assertEqual(test_str_2, right_str_2 )
 if __name__ == '__main__':
     unittest.main()
