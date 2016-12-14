@@ -12,7 +12,7 @@
     </script>
     <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
-
+<!-------------------------------------------------CONTAINER----------------------------------------------------------->
 <body style="background-color: rgba(215, 252, 204, 0.32);">
 
 <div id="container"> <!-- everything on the screen -->
@@ -22,7 +22,7 @@
     </div><div id="for_form" style="border-radius: 10px; padding-top:10%; background-color:rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
 
         <div id="for_input" style="width: 40%; margin-bottom: 100px; background-color:#a0ce96; border-radius: 10px; margin-left: 5%" spellcheck="true">
-    <form id='input' method="post" action="/" style="border-radius: 10px;"  >
+    <form id='input' method="post" action="/" style="border-radius: 10px;">
             <div style="margin-left: 5%;">
             <label for='input'> <h3 style="font-family: 'Open Sans', arial; color:#ffffff; margin-top: 10px;">Type your string in here:</h3>
                 <p style="color:white;"><i>(Please use letters)</i></p> </label> <br/>  <!--this comes just before the text field-->
@@ -34,6 +34,7 @@
         <div id="for_button" style="margin-left: 5%; padding-bottom: 20px;"> <!-- need this div just to change the margin of the button-->
          <input id="encode_button" type="submit" value="Let's encode">
         </div>
+        <!--added some css3 style below-->
         <style>
             #encode_button {
             border-radius: 3px;
@@ -53,17 +54,34 @@
 
     </form>
 
-<!--for_matrix = for_input-->
-
-
         </div>
     </div>
-    <div id="for_solution" style="wigth:100px; height:100px;  background-color: rgba(215, 252, 204, 0.32);">
-        <p style="font-size: 100%">Resulting code</p>
-         <p style="font-size:100%; "> {{solution}} </p>
+<!---------------------------------------------------RESULT------------------------------------------------------------>
+   <div class="for_solutions" style=" width: 600px; height:200px; background-color:#a0ce96;font-family: 'Open Sans', arial;
+        border-radius: 10px; box-shadow: 5px 5px #d1d8d0;">
+       <h4 id="result_block" style="font-family: 'Open Sans', arial; margin-left: 6px;color: white;">Resulting code block:</h4>
+       <div id="pereshkody">
+           <label for="wrongsol" style="color:white;">After sending through the overflowing channel:</label>
+       <p id="wrongsol"> {{wr_solution}} </p>
+       </div>
+        <div id="fixed_message">
+        <label for="wrongsol" style="color:white;">After fixing the message with the method of Hamming:</label>
+       <p id="rightsol">{{r_solution}} </p>
+            </div>
+      <!-- <p id="message_"> {{message}}</p>-->
+   </div>
+    <style>
 
-         <p style="font: courier;"> {{message}}</p>
-    </div>
+        #result-block {
+        font-color: white;
+        padding-left: 6px;}
+        #result_block, #wrongsol, #rightsol{
+        font-family: 'Open Sans', arial;
+        #pereshkody:hover{
+        background-color:#ead2ef;}
+        }
+    </style>
+
 
 
 
