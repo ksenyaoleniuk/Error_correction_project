@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=["GET", "POST"])
-def get_index():
+def get_message():
      try:
          if request.method == "POST":
              message = request.form['input']
