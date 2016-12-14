@@ -16,20 +16,40 @@
 <body style="background-color: rgba(215, 252, 204, 0.32);">
 
 <div id="container"> <!-- everything on the screen -->
-    <h1 style="color: white; background-color: #017c57; border-radius: 10px; text-align: center;"> Decoding is beautiful </h1>
-    <div id="for_form" style="border-radius: 10px; padding-top:10%; background-color: rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
-        <div id="for_input" style="width: 40%;background-color: #6fdb99; border-radius: 10px; margin-left: 5%">
+    <div id="for_header" style="background-color: #8ab282;border-radius: 10px;">
+    <h1 style="color: white; font-family: 'Open Sans', arial; font-size:42px; margin-bottom:20px; text-align: center;"> Decoding is beautiful </h1>
+    <h2 style="color: white; font-family: 'Open Sans', arial;  marging-bottom:30px; text-align: center;">Demonstrating 7,4 Hamming Codes</h2>
+    </div><div id="for_form" style="border-radius: 10px; padding-top:10%; background-color:rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
+
+        <div id="for_input" style="width: 40%; margin-bottom: 100px; background-color:#a0ce96; border-radius: 10px; margin-left: 5%" spellcheck="true">
     <form id='input' method="post" action="/" style="border-radius: 10px;"  >
             <div style="margin-left: 5%;">
-            <label for='input'> <h2>Type your string in here:</h2> <p></p> </label> <br/>
-                <textarea name="input" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;">{{message}}</textarea>
+            <label for='input'> <h3 style="font-family: 'Open Sans', arial; color:#ffffff; margin-top: 10px;">Type your string in here:</h3>
+                <p style="color:white;"><i>(Please use letters)</i></p> </label> <br/>  <!--this comes just before the text field-->
+                <textarea name="input" rows="6" style="width: 150px; height: 100px; font-size: 16px; border-radius: 10px;"></textarea>
             </div>
-            <br> <!--this tag is moving to the next line-->
+            <br> <!--this tag is moving to thee next line-->
 
-           <!--deleted vB everything-->
-        <div id="for_button" style="margin-left: 5%; margin-bottom: 5%;"> <!-- need this div just to change the margin of the button-->
-         <input type="submit" value="Let's check!">
+           <!--deleted vB everything rgba(215, 252, 204, 0.32)-->
+        <div id="for_button" style="margin-left: 5%; padding-bottom: 20px;"> <!-- need this div just to change the margin of the button-->
+         <input id="encode_button" type="submit" value="Let's encode">
         </div>
+        <style>
+            #encode_button {
+            border-radius: 3px;
+            box-shadow: 1px 1px #72846f;}
+
+            #encode_button:hover {
+            background-color: #d1d8d0
+            }
+             #encode_button:active{
+             background-color:#a0ce96
+             }
+            #for_input {
+            box-shadow: 5px 5px #d1d8d0;}
+            h1 { shadow: 2px 2px #d1d8d0;
+            }
+        </style>
 
     </form>
 
@@ -40,10 +60,7 @@
     </div>
     <div id="for_solution" style="wigth:100px; height:100px;  background-color: rgba(215, 252, 204, 0.32);">
         <p style="font-size: 100%">Resulting code</p>
-         <p style="font-size:100%; "> {{wr_solution}} </p>
-
-        <!--<p style="font-size:100%; "> {{r_solution}} </p>-->
- 
+         <p style="font-size:100%; "> {{solution}} </p>
 
          <p style="font: courier;"> {{message}}</p>
     </div>
