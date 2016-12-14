@@ -115,5 +115,5 @@ def main(strr):
 
     return wrong_str, right_str, error_bits, bin_str
 
-print(main("apple"))
+
 
