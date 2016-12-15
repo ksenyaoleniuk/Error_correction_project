@@ -12,7 +12,7 @@ def get_message():
      try:
          if request.method == "POST":
              message = request.form['input']
-             print(message)
+             #print(message)
              wrong, right, error_bits, bin_str = main(message)
              return render_template('error.html', message=message, wr_solution=wrong, r_solution=right)
          else:
