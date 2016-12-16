@@ -18,14 +18,17 @@
 <div id="container"> <!-- everything on the screen -->
     <div id="for_header" style="background-color: #8ab282;border-radius: 10px;">
     <h1 style="color: white; font-family: 'Open Sans', arial; font-size:42px; margin-bottom:20px; text-align: center;"> Decoding is beautiful </h1>
-    <h2 style="color: white; font-family: 'Open Sans', arial;  marging-bottom:30px; text-align: center;">Demonstrating 7,4 Hamming Codes</h2>
+    <h2 style="color: white; font-family: 'Open Sans', arial; font-size: 20px; marging-bottom:30px; text-align: center;">Demonstrating 7,4 Hamming Codes</h2>
     </div>
-    <div id="for_form" style="border-radius: 10px; padding-top:10%; background-color:rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
+<!-------------------------------------------------MAGIC STARTS HERE--------------------------------------------------->
+
+
+    <div id="body_background" style="border-radius: 10px; padding-top:10%; background-color:rgba(215, 252, 204, 0.32); margin-bottom: 10%; " >
 <!--rgba(215, 252, 204, 0.32)-->
         <div id="for_input" style="width: 40%; margin-bottom: 100px; background-color:#a0ce96; border-radius: 10px; margin-left: 5%" spellcheck="true">
     <form id='input' method="post" action="/" style="border-radius: 10px;">
             <div style="margin-left: 5%;">
-            <label for='input'> <h3 style="font-family: 'Open Sans', arial; color:#ffffff; margin-top: 10px;">Type your string in here:</h3>
+            <label for='input'> <h3 style="font-family: 'Open Sans', arial; color:#ffffff;">Type your string in here:</h3>
                 <p style="color:white;"><i>(Please use letters)</i></p> </label> <br/>  <!--this comes just before the text field-->
                 <input name="input" type='text' placeholder="{{message}}" height="100px"; style="width: 150px; height: 100px; font-size: 16px; border-radius: 10px;">
             </div>
@@ -39,10 +42,12 @@
         <style>
             #encode_button {
             border-radius: 3px;
-            box-shadow: 1px 1px #72846f;}
+            box-shadow: 1px 1px #72846f;
+            }
 
             #encode_button:hover {
-            background-color: #d1d8d0
+            background-color: #d1d8d0;
+            border: 1px solid #ccc;
             }
              #encode_button:active {
              background-color:#a0ce96
@@ -57,22 +62,28 @@
 
 
         </div>
-
-     <div class="for_solutions" style=" width: 600px; height:200px; background-color:#a0ce96;font-family: 'Open Sans', arial;
-        border-radius: 10px;  margin-bottom: 900px; margin-left: 650px; box-shadow: 5px 5px #d1d8d0;">
+<!---------------------------------------------------RESULT------------------------------------------------------------>
+     <div class="for_solutions" style=" width: 40%; height:300px; padding-left: 15px; padding-bottom:15px; background-color:#a0ce96;font-family: 'Open Sans', arial;
+        border-radius: 10px;  margin-bottom: 900px; margin-left: 690px; ; box-shadow: 5px 5px #d1d8d0;">
        <h4 id="result_block" style="font-family: 'Open Sans', arial; margin-left: 6px;color: white;">Resulting code block:</h4>
        <div id="pereshkody">
-           <label for="wrongsol" style="color:white;">After sending through the noisy channel:</label>
+           <label for="wrongsol" style="color:white;"> After sending through the noisy channel:</label>
        <p id="wrongsol"> {{wr_solution}} </p>
+        <label for="wrong_bins" style="color:white;"> Mistakes found in this positions:</label>
+       <p id="wrong_bins"> {{er_bits}}</p>
        </div>
-        <div id="fixed_message">
+        <div id="fixed_message" style="padding-bottom: 3%">
+        <label for="binary_str" style="color:white;"> Binary string for this message is:</label>
+            <p id="binary_str">{{fixed_bin}}</p>
         <label for="wrongsol" style="color:white;">After fixing the message with the method of Hamming:</label>
        <p id="rightsol">{{r_solution}} </p>
             </div>
+
+         </div>
        <!--<p id="message_"> {{message}}</p>-->
 
     </div>
-<!---------------------------------------------------RESULT------------------------------------------------------------>
+<!---------------------------------------------------RESULT--STYLE----------------------------------------------------->
 
     <style>
         #result-block {
@@ -80,6 +91,9 @@
         padding-left: 6px;}
         #result_block, #wrongsol, #rightsol{
         font-family: 'Open Sans', arial;
+       }
+       h4, h3 {
+       font-size: 20px;
        }
     </style>
 
