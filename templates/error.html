@@ -63,16 +63,16 @@
 
         </div>
 <!---------------------------------------------------RESULT------------------------------------------------------------>
-     <div class="for_solutions" style=" width: 40%; height:300px; padding-left: 15px; padding-bottom:15px; background-color:#a0ce96;font-family: 'Open Sans', arial;
-        border-radius: 10px;  margin-bottom: 900px; margin-left: 690px; ; box-shadow: 5px 5px #d1d8d0;">
-       <h4 id="result_block" style="font-family: 'Open Sans', arial; margin-left: 6px;color: white;">Resulting code block:</h4>
-       <div id="pereshkody">
+     <div class="for_solutions" style=" float: right; width: 50%; height:300px; padding-left: 15px; padding-bottom:15px; background-color:#a0ce96;font-family: 'Open Sans', arial;
+        border-radius: 10px;  margin-bottom: 40%; box-shadow: 5px 5px #d1d8d0;">
+       <h4 id="result_block" style="font-family: 'Open Sans', arial; margin-left: 10%; color: white;">Resulting code block:</h4>
+       <div id="pereshkody" style="margin-left: 20%;">
            <label for="wrongsol" style="color:white;"> After sending through the noisy channel:</label>
        <p id="wrongsol"> {{wr_solution}} </p>
         <label for="wrong_bins" style="color:white;"> Mistakes found in this positions:</label>
        <p id="wrong_bins"> {{er_bits}}</p>
        </div>
-        <div id="fixed_message" style="padding-bottom: 3%">
+        <div id="fixed_message" style="padding-bottom: 3%; margin-left: 20%;">
         <label for="binary_str" style="color:white;"> Binary string for this message is:</label>
             <p id="binary_str">{{fixed_bin}}</p>
         <label for="wrongsol" style="color:white;">After fixing the message with the method of Hamming:</label>
@@ -81,6 +81,7 @@
 
          </div>
        <!--<p id="message_"> {{message}}</p>-->
+
 
     </div>
 <!---------------------------------------------------RESULT--STYLE----------------------------------------------------->
